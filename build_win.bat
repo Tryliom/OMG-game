@@ -1,8 +1,8 @@
 mkdir bin
 
-clang++ src/main.cpp ^
+clang++ src/main.cpp src/Window.cpp ^
     -o bin/game.exe ^
-    -std=c++14 ^
+    -std=c++20 ^
     -Wall -Wextra ^
     -I libs/include ^
     libs/win-x64/minifb.lib ^

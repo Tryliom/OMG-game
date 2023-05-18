@@ -23,7 +23,10 @@ private:
     struct mfb_window* _window;
     uint32_t* _buffer;
 
+	uint32_t _frame;
+
     void DrawPixel(uint32_t index, Color color);
+	void DrawPixel(uint32_t x, uint32_t y, int color);
 
 public:
     void Update();
@@ -36,4 +39,9 @@ public:
 
     void DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
     void DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
+
+	void DrawPlasma();
+	void DrawCustom();
+
+	uint32_t GetFrame() { return _frame; }
 };

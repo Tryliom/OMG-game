@@ -217,3 +217,12 @@ void Window::DrawCustom()
 	}
 }
 
+Position Window::GetMousePosition()
+{
+	Position position;
+
+	position.X = mfb_get_mouse_x(_window);
+	position.Y = mfb_get_mouse_y(_window);
+
+	return position;
+}

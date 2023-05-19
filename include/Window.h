@@ -67,4 +67,6 @@ public:
 	void DrawCustom();
 
 	uint32_t GetFrame() { return _frame; }
+
+	Position GetMousePosition();
 };

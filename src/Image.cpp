@@ -48,6 +48,8 @@ Image::Image(const char* filename)
 
 void Image::SetScale(float factor)
 {
+	_scale = factor;
+
 	_width = _originalWidth * factor;
 	_height = _originalHeight * factor;
 

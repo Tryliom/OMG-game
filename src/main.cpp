@@ -1,6 +1,6 @@
 #include "../include/Window.h"
 
-#include <math.h>
+#include <iostream>
 
 int main()
 {
@@ -11,13 +11,13 @@ int main()
 	Image bull("assets/bull.png");
 
     do {
-		auto frame = window.GetFrame() % width;
+		auto mousePosition = window.GetMousePosition();
 
 		window.DrawCustom();
 
-		bull.SetScale(5.f + sin(frame * 0.1f));
+		bull.SetScale(5.f + sin(window.GetFrame() / 10.f));
 
-		window.DrawImage(bull, frame, frame, Pivot::Center);
+		window.DrawImage(bull, mousePosition.X, mousePosition.Y, Pivot::Center);
 
         window.Update();
     }

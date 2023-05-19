@@ -36,7 +36,7 @@ bool Window::IsOpen()
     return _window != nullptr;
 }
 
-void Window::DrawPixel(uint32_t index, Color color)
+void Window::DrawPixel(uint32_t index, int color)
 {
     if (index >= _width * _height)
     {
@@ -50,17 +50,12 @@ void Window::DrawPixel(uint32_t x, uint32_t y, int color)
 {
 	const uint32_t index = y * _width + x;
 
-	if (index >= _width * _height)
+	if (x >= _width || y >= _height)
 	{
 		return;
 	}
 
-	_buffer[index] = color;
-}
-
-void Window::DrawPixel(uint32_t x, uint32_t y, Color color)
-{
-    DrawPixel(y * _width + x, color);
+	DrawPixel(index, color);
 }
 
 void Window::DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, Color color)
@@ -94,6 +89,80 @@ void Window::DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t 
     {
         DrawHorizontalLine(x, y + i, width, color);
     }
+}
+
+Position Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot)
+{
+	Position position;
+
+	if (pivot == Pivot::Center)
+	{
+		position.X = x - width / 2;
+		position.Y = y - height / 2;
+	}
+	else if (pivot == Pivot::TopLeft)
+	{
+		position.X = x;
+		position.Y = y;
+	}
+	else if (pivot == Pivot::TopRight)
+	{
+		position.X = x - width;
+		position.Y = y;
+	}
+	else if (pivot == Pivot::BottomLeft)
+	{
+		position.X = x;
+		position.Y = y - height;
+	}
+	else if (pivot == Pivot::BottomRight)
+	{
+		position.X = x - width;
+		position.Y = y - height;
+	}
+	else if (pivot == Pivot::TopCenter)
+	{
+		position.X = x - width / 2;
+		position.Y = y;
+	}
+	else if (pivot == Pivot::BottomCenter)
+	{
+		position.X = x - width / 2;
+		position.Y = y - height;
+	}
+	else if (pivot == Pivot::CenterLeft)
+	{
+		position.X = x;
+		position.Y = y - height / 2;
+	}
+	else if (pivot == Pivot::CenterRight)
+	{
+		position.X = x - width;
+		position.Y = y - height / 2;
+	}
+
+	return position;
+}
+
+void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
+{
+	uint32_t imageWidth = image.GetWidth();
+	uint32_t imageHeight = image.GetHeight();
+
+	Position position = GetStartPosition(imageWidth, imageHeight, x, y, pivot);
+
+	for (uint32_t i = 0; i < imageHeight; i++)
+	{
+		for (uint32_t j = 0; j < imageWidth; j++)
+		{
+			uint32_t color = image.GetBuffer()[i * imageWidth + j];
+
+			if (color != 0)
+			{
+				DrawPixel(position.X + j, position.Y + i, color);
+			}
+		}
+	}
 }
 
 void Window::DrawPlasma()

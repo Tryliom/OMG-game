@@ -1,5 +1,7 @@
 #include "../include/Window.h"
 
+#include <math.h>
+
 int main()
 {
     const uint32_t width = 640;
@@ -10,7 +12,11 @@ int main()
 
     do {
 		auto frame = window.GetFrame() % width;
-		//window.DrawCustom();
+
+		window.DrawCustom();
+
+		bull.SetScale(5.f + sin(frame * 0.1f));
+
 		window.DrawImage(bull, frame, frame, Pivot::Center);
 
         window.Update();

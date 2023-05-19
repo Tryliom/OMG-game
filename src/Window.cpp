@@ -188,7 +188,7 @@ void Window::DrawPlasma()
 
 			float colorValue = xSinValue + ySinValue + positionSinValue + sqrtSinValue + colorBlurOffset;
 
-			color = (uint32_t) (colorValue * 32.0f);
+			color = (uint32_t) (colorValue * 32.f);
 
 			DrawPixel(x, y, color);
 		}

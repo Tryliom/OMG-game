@@ -197,6 +197,7 @@ void Window::DrawPlasma()
 
 void Window::DrawCustom()
 {
+	const uint32_t speed = 100;
 	const uint32_t maxRadius = _width / 2;
 	const uint32_t maxRadiusSquared = maxRadius * maxRadius;
 	const uint32_t colorMultiplier = 0xFFFFFF / maxRadiusSquared * _frame * 0.001f;
@@ -210,7 +211,7 @@ void Window::DrawCustom()
 
 			const uint32_t distanceSquared = dx * dx + dy * dy;
 
-			const uint32_t color = distanceSquared * colorMultiplier - _frame * _frame * 100 /*sin(cos(_frame) * cos(_frame)) * cos(sin(_frame) * sin(_frame))*/;
+			const uint32_t color = distanceSquared * colorMultiplier - _frame * _frame * speed /*sin(cos(_frame) * cos(_frame)) * cos(sin(_frame) * sin(_frame))*/;
 
 			DrawPixel(x, y, color);
 		}

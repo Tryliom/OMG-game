@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "../include/Input.h"
 
 Window::Window(uint32_t width, uint32_t height)
 {
@@ -15,6 +16,8 @@ Window::Window(uint32_t width, uint32_t height)
 
     _window = mfb_open_ex("OMG-game", width, height, false);
     _buffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+
+    Input::Initialize(_window);
 }
 
 void Window::Update()
@@ -31,6 +34,8 @@ void Window::Update()
     }
 
 	_frame++;
+
+    Input::Update();
 }
 
 bool Window::IsOpen()
@@ -138,17 +143,22 @@ Position Window::GetRotatedPosition(uint32_t x, uint32_t y, Image image, Pivot p
     float angle = image.GetRotation();
     uint32_t width = image.GetWidth();
     uint32_t height = image.GetHeight();
+    float sinAngle = sin(angle);
+    float cosAngle = cos(angle);
     Position position;
 
     if (pivot == Pivot::Center)
     {
-        position.X = (int)(x * cos(angle) - y * sin(angle)) + width / 2;
-        position.Y = (int)(x * sin(angle) + y * cos(angle)) + height / 2;
+        x -= width / 2;
+        y -= height / 2;
+
+        position.X = (int)(x * cosAngle - y * sinAngle) + width / 2;
+        position.Y = (int)(x * sinAngle + y * cosAngle) + height / 2;
     }
     else if (pivot == Pivot::TopLeft)
     {
-        position.X = (int) (x * cos(angle) - y * sin(angle));
-        position.Y = (int) (x * sin(angle) + y * cos(angle));
+        position.X = (int) (x * cosAngle - y * sinAngle);
+        position.Y = (int) (x * sinAngle + y * cosAngle);
     }
 
     return position;
@@ -238,10 +248,10 @@ void Window::DrawCustom()
 
 Position Window::GetMousePosition()
 {
-	Position position;
+    Position position;
 
-	position.X = mfb_get_mouse_x(_window);
-	position.Y = mfb_get_mouse_y(_window);
+    position.X = mfb_get_mouse_x(_window);
+    position.Y = mfb_get_mouse_y(_window);
 
-	return position;
+    return position;
 }

@@ -40,7 +40,7 @@ bool Window::IsOpen()
 
 void Window::DrawPixel(uint32_t index, int color)
 {
-    if (index >= _width * _height)
+    if (index >= _width * _height || color >> 24 == 0)
     {
         return;
     }
@@ -107,43 +107,29 @@ Position Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, u
 		position.X = x;
 		position.Y = y;
 	}
-	else if (pivot == Pivot::TopRight)
-	{
-		position.X = x - width;
-		position.Y = y;
-	}
-	else if (pivot == Pivot::BottomLeft)
-	{
-		position.X = x;
-		position.Y = y - height;
-	}
-	else if (pivot == Pivot::BottomRight)
-	{
-		position.X = x - width;
-		position.Y = y - height;
-	}
-	else if (pivot == Pivot::TopCenter)
-	{
-		position.X = x - width / 2;
-		position.Y = y;
-	}
-	else if (pivot == Pivot::BottomCenter)
-	{
-		position.X = x - width / 2;
-		position.Y = y - height;
-	}
-	else if (pivot == Pivot::CenterLeft)
-	{
-		position.X = x;
-		position.Y = y - height / 2;
-	}
-	else if (pivot == Pivot::CenterRight)
-	{
-		position.X = x - width;
-		position.Y = y - height / 2;
-	}
 
 	return position;
+}
+
+Position Window::GetRotatedPosition(uint32_t x, uint32_t y, Image image, Pivot pivot)
+{
+    float angle = image.GetRotation();
+    uint32_t width = image.GetWidth();
+    uint32_t height = image.GetHeight();
+    Position position;
+
+    if (pivot == Pivot::Center)
+    {
+        position.X = (int)(x * cos(angle) - y * sin(angle)) + width / 2;
+        position.Y = (int)(x * sin(angle) + y * cos(angle)) + height / 2;
+    }
+    else if (pivot == Pivot::TopLeft)
+    {
+        position.X = (int) (x * cos(angle) - y * sin(angle));
+        position.Y = (int) (x * sin(angle) + y * cos(angle));
+    }
+
+    return position;
 }
 
 void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
@@ -160,19 +146,17 @@ void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
         {
             uint32_t color = image.GetBuffer()[i * imageWidth + j];
 
-            if (color != 0)
+            auto x = j;
+            auto y = i;
+
+            if (imageRotation != 0.f)
             {
-                auto x = j;
-                auto y = i;
-
-                if (imageRotation != 0.f)
-                {
-                    x = (uint32_t)(cos(imageRotation) * j - sin(imageRotation) * i) + imageWidth / 2;
-                    y = (uint32_t)(sin(imageRotation) * j + cos(imageRotation) * i) + imageHeight / 2;
-                }
-
-                DrawPixel(position.X + x, position.Y + y, color);
+                auto position = GetRotatedPosition(j, i, image, pivot);
+                x = position.X;
+                y = position.Y;
             }
+
+            DrawPixel(position.X + x, position.Y + y, color);
         }
     }
 }

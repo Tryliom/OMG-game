@@ -58,6 +58,7 @@ public:
     void DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, Color color);
     void DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, Color color);
 
+    // Top left pivot
     void DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
     void DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
 

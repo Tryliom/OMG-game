@@ -1,7 +1,7 @@
 #include "../include/Window.h"
 #include "../include/Input.h"
-
-#include <iostream>
+#include "../include/Player.h"
+#include "../include/Enemy.h"
 
 int main()
 {
@@ -9,34 +9,21 @@ int main()
     const uint32_t height = 640;
 
     Window window(width, height);
-	Image bull("assets/bull.png");
-    Position bullPosition = { 0, 0 };
+	Player player;
+    Enemy enemy;
+
+    player.SetPosition({ width / 2, height - 80 });
+    enemy.SetPosition({ width / 2, -100 });
+    enemy.SetDirection({ 0.f, 1.f });
+
+    enemy.Initialize();
 
     do {
-		window.DrawCustom();
+		player.Update();
+        player.Draw(window);
 
-		bull.SetScale(5.f + sin(window.GetFrame() / 10.f));
-        bull.SetRotation(window.GetFrame() / 100.f);
-
-        if (Input::IsKeyHeld(KB_KEY_A))
-        {
-            bullPosition.X -= 1;
-        }
-        else if (Input::IsKeyHeld(KB_KEY_D))
-        {
-            bullPosition.X += 1;
-        }
-
-        if (Input::IsKeyHeld(KB_KEY_W))
-        {
-            bullPosition.Y -= 1;
-        }
-        else if (Input::IsKeyHeld(KB_KEY_S))
-        {
-            bullPosition.Y += 1;
-        }
-
-		window.DrawImage(bull, bullPosition.X, bullPosition.Y, Pivot::Center);
+        enemy.Update();
+        enemy.Draw(window);
 
         window.Update();
     }

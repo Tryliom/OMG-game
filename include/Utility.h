@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 enum Color
 {
     Black = 0x000000,
@@ -15,8 +17,14 @@ enum Pivot
     Center
 };
 
-struct Position
+struct Vector2I
 {
-    uint32_t X;
-    uint32_t Y;
+    int X;
+    int Y;
+};
+
+struct Vector2F
+{
+    float X;
+    float Y;
 };

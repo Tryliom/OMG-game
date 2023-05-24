@@ -1,6 +1,6 @@
 mkdir bin
 
-clang++ src/main.cpp src/Window.cpp src/Image.cpp src/Input.cpp ^
+clang++ src/main.cpp src/Window.cpp src/Image.cpp src/Input.cpp src/Player.cpp src/Enemy.cpp ^
     -o bin/game.exe ^
     -std=c++20 ^
     -Wall -Wextra ^

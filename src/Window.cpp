@@ -120,9 +120,9 @@ void Window::DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t 
     }
 }
 
-Position Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot)
+Vector2I Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot)
 {
-	Position position;
+    Vector2I position;
 
 	if (pivot == Pivot::Center)
 	{
@@ -138,14 +138,14 @@ Position Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, u
 	return position;
 }
 
-Position Window::GetRotatedPosition(int x, int y, Image image, Pivot pivot)
+Vector2I Window::GetRotatedPosition(int x, int y, Image image, Pivot pivot)
 {
     float angle = image.GetRotation();
     uint32_t width = image.GetWidth();
     uint32_t height = image.GetHeight();
     float sinAngle = sin(angle);
     float cosAngle = cos(angle);
-    Position position;
+    Vector2I position;
 
     if (pivot == Pivot::Center)
     {
@@ -170,7 +170,7 @@ void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
 	uint32_t imageHeight = image.GetHeight();
     float imageRotation = image.GetRotation();
 
-	Position position = GetStartPosition(imageWidth, imageHeight, x, y, pivot);
+    auto position = GetStartPosition(imageWidth, imageHeight, x, y, pivot);
 
     for (uint32_t i = 0; i < imageHeight; i++)
     {
@@ -246,9 +246,9 @@ void Window::DrawCustom()
 	}
 }
 
-Position Window::GetMousePosition()
+Vector2I Window::GetMousePosition()
 {
-    Position position;
+    Vector2I position;
 
     position.X = mfb_get_mouse_x(_window);
     position.Y = mfb_get_mouse_y(_window);

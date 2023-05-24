@@ -20,8 +20,8 @@ private:
 
     void DrawPixel(uint32_t index, int color);
 
-	Position GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot);
-    Position GetRotatedPosition(int x, int y, Image image, Pivot pivot);
+    Vector2I GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot);
+    Vector2I GetRotatedPosition(int x, int y, Image image, Pivot pivot);
 
 public:
     void Update();
@@ -43,5 +43,5 @@ public:
 
 	uint32_t GetFrame() { return _frame; }
 
-    Position GetMousePosition();
+    Vector2I GetMousePosition();
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 enum Color
 {
@@ -17,14 +17,28 @@ enum Pivot
     Center
 };
 
+struct Vector2F
+{
+	float X;
+	float Y;
+};
+
 struct Vector2I
 {
     int X;
     int Y;
+
+	explicit operator Vector2F() const
+	{
+		return { (float)X, (float)Y };
+	}
 };
 
-struct Vector2F
+namespace Utility
 {
-    float X;
-    float Y;
-};
+	float GetDistance(Vector2F a, Vector2F b);
+	float GetAngle(Vector2F a, Vector2F b);
+	Vector2F GetDirection(Vector2F a, Vector2F b);
+	float Range(float min, float max);
+	int Range(int min, int max);
+}

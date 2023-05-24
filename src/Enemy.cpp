@@ -1,15 +1,13 @@
-#include "../include/Enemy.h"
+#include "Enemy.h"
 
-#include "math.h"
+#include <cmath>
+#include <iostream>
+
+Image Enemy::Sprite("../assets/enemy.png");
 
 Enemy::Enemy()
 {
     _position = { 0, 0 };
-}
-
-void Enemy::Initialize()
-{
-    _image = Image("assets/enemy.png");
 }
 
 void Enemy::Update()
@@ -18,12 +16,12 @@ void Enemy::Update()
     _position.Y += _direction.Y * _speed;
 }
 
-void Enemy::Draw(Window window)
+void Enemy::Draw(Window window) const
 {
     // Set rotation according to the direction
-    float angle = atan2(_direction.Y, _direction.X) + 180.f;
+    float angle = std::atan2(_direction.Y, _direction.X) * 180.f / 3.14159265f + 270.f;
 
-    _image.SetRotation(angle);
+    Sprite.SetRotation(angle);
 
-    window.DrawImage(_image, _position.X, _position.Y, Pivot::Center);
+    window.DrawImage(Sprite, _position.X, _position.Y, Pivot::Center);
 }

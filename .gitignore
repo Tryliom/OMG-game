@@ -1,4 +1,5 @@
 bin/*
 cmake-build-debug
+cmake-build-debugwin
 .idea
 .vs

@@ -3,7 +3,7 @@
 #include "MiniFB.h"
 #include "../include/Input.h"
 
-Player::Player() : _image("assets/player.png")
+Player::Player() : _image("../assets/player.png")
 {
     _position = { 0, 0 };
 }

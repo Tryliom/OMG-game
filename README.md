@@ -11,3 +11,7 @@
 1. Display an image using [STB-Image](https://github.com/nothings/stb/blob/master/stb_image.h)
 2. Implement an [demo fx effect](https://seancode.com/demofx/)
 3. -> https://discord.com/channels/238644452598611969/1012696847715938325/1108406079508979762
+
+## Run on Clion
+
+Add configuration using System and Ninja

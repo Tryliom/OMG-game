@@ -1,7 +1,8 @@
-#include "../include/Window.h"
-#include "../include/Input.h"
-#include "../include/Player.h"
-#include "../include/Enemy.h"
+#include "Window.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "EnemyManager.h"
+#include "Utility.h"
 
 int main()
 {
@@ -10,20 +11,28 @@ int main()
 
     Window window(width, height);
 	Player player;
-    Enemy enemy;
+	EnemyManager enemyManager;
 
     player.SetPosition({ width / 2, height - 80 });
-    enemy.SetPosition({ width / 2, -100 });
-    enemy.SetDirection({ 0.f, 1.f });
-
-    enemy.Initialize();
 
     do {
+		auto frame = window.GetFrame();
+
+		if (frame % 200 == 0)
+		{
+			Enemy enemy;
+
+			enemy.SetPosition({ Utility::Range(0, width), 100 });
+			enemy.SetDirection(Utility::GetDirection((Vector2F) enemy.GetPosition(), (Vector2F) player.GetPosition()));
+
+			enemyManager.AddEnemy(enemy);
+		}
+
 		player.Update();
         player.Draw(window);
 
-        enemy.Update();
-        enemy.Draw(window);
+		enemyManager.Update(width, height);
+		enemyManager.Draw(window);
 
         window.Update();
     }

@@ -10,16 +10,16 @@ public:
     Enemy();
 
 private:
-    static Image _image;
-    Vector2I _position;
+    Vector2I _position{};
 
     float _speed = 2.f;
     Vector2F _direction = { 0.f, 1.f };
 
 public:
-    void Initialize();
+	static Image Sprite;
+
     void Update();
-    void Draw(Window window);
+    void Draw(Window window) const;
 
     Vector2I GetPosition() { return _position; }
     void SetPosition(Vector2I position) { _position = position; }

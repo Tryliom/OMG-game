@@ -148,21 +148,25 @@ void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
 {
 	uint32_t imageWidth = image.GetWidth();
 	uint32_t imageHeight = image.GetHeight();
+    float rotation = image.GetRotation();
 
 	Position position = GetStartPosition(imageWidth, imageHeight, x, y, pivot);
 
-	for (uint32_t i = 0; i < imageHeight; i++)
-	{
-		for (uint32_t j = 0; j < imageWidth; j++)
-		{
-			uint32_t color = image.GetBuffer()[i * imageWidth + j];
+    for (uint32_t i = 0; i < imageHeight; i++)
+    {
+        for (uint32_t j = 0; j < imageWidth; j++)
+        {
+            uint32_t color = image.GetBuffer()[i * imageWidth + j];
 
-			if (color != 0)
-			{
-				DrawPixel(position.X + j, position.Y + i, color);
-			}
-		}
-	}
+            if (color != 0)
+            {
+                auto rotatedX = (uint32_t) (cos(rotation) * j - sin(rotation) * i) + imageWidth / 2;
+                auto rotatedY = (uint32_t) (sin(rotation) * j + cos(rotation) * i) + imageHeight / 2;
+
+                DrawPixel(position.X + rotatedX, position.Y + rotatedY, color);
+            }
+        }
+    }
 }
 
 void Window::DrawPlasma()

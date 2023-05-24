@@ -46,6 +46,11 @@ Image::Image(const char* filename)
 	stbi_image_free(pixels);
 }
 
+void Image::SetRotation(float angle)
+{
+    _rotation = angle;
+}
+
 void Image::SetScale(float factor)
 {
 	_scale = factor;

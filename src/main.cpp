@@ -16,6 +16,7 @@ int main()
 		window.DrawCustom();
 
 		bull.SetScale(5.f + sin(window.GetFrame() / 10.f));
+        bull.SetRotation(window.GetFrame() / 100.f);
 
 		window.DrawImage(bull, mousePosition.X, mousePosition.Y, Pivot::Center);
 

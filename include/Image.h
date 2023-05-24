@@ -19,6 +19,7 @@ private:
 	uint32_t* _buffer;
 
 	float _scale = 1.f;
+    float _rotation = 0.f;
 
 public:
 	uint32_t GetWidth() { return _width; }
@@ -27,6 +28,8 @@ public:
 	uint32_t* GetBuffer() { return _buffer; }
 
 	float GetScale() { return _scale; }
+    float GetRotation() { return _rotation; }
 
+    void SetRotation(float angle);
 	void SetScale(float factor);
 };

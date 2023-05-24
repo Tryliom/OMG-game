@@ -3,7 +3,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "stb_image.h"
-#include "malloc.h"
+#if defined(_WIN32)
+    #include "malloc.h"
+#endif
 #include <stdio.h>
 #include <string.h>
 

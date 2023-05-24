@@ -1,7 +1,9 @@
 #include "../include/Window.h"
 
 #include "MiniFB.h"
-#include "malloc.h"
+#if defined(_WIN32)
+    #include "malloc.h"
+#endif
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -148,7 +150,7 @@ void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
 {
 	uint32_t imageWidth = image.GetWidth();
 	uint32_t imageHeight = image.GetHeight();
-    float rotation = image.GetRotation();
+    float imageRotation = image.GetRotation();
 
 	Position position = GetStartPosition(imageWidth, imageHeight, x, y, pivot);
 
@@ -160,10 +162,16 @@ void Window::DrawImage(Image image, uint32_t x, uint32_t y, Pivot pivot)
 
             if (color != 0)
             {
-                auto rotatedX = (uint32_t) (cos(rotation) * j - sin(rotation) * i) + imageWidth / 2;
-                auto rotatedY = (uint32_t) (sin(rotation) * j + cos(rotation) * i) + imageHeight / 2;
+                auto x = j;
+                auto y = i;
 
-                DrawPixel(position.X + rotatedX, position.Y + rotatedY, color);
+                if (imageRotation != 0.f)
+                {
+                    x = (uint32_t)(cos(imageRotation) * j - sin(imageRotation) * i) + imageWidth / 2;
+                    y = (uint32_t)(sin(imageRotation) * j + cos(imageRotation) * i) + imageHeight / 2;
+                }
+
+                DrawPixel(position.X + x, position.Y + y, color);
             }
         }
     }

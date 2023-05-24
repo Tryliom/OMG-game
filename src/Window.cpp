@@ -45,6 +45,28 @@ void Window::DrawPixel(uint32_t index, int color)
         return;
     }
 
+    if (_buffer[index] != 0)
+    {
+        // Alpha blending
+        const float srcAlpha = (float) ((uint8_t) (color >> 24)) / 256.f;
+        const float destAlpha = 1.f - srcAlpha;
+        const uint32_t destColor = _buffer[index];
+
+        const uint8_t destR = (uint8_t) (destColor >> 16);
+        const uint8_t destG = (uint8_t) (destColor >> 8);
+        const uint8_t destB = (uint8_t) (destColor);
+
+        const uint8_t srcR = (uint8_t) (color >> 16);
+        const uint8_t srcG = (uint8_t) (color >> 8);
+        const uint8_t srcB = (uint8_t) (color);
+
+        const uint8_t r = (uint8_t) (srcR * srcAlpha + destR * destAlpha);
+        const uint8_t g = (uint8_t) (srcG * srcAlpha + destG * destAlpha);
+        const uint8_t b = (uint8_t) (srcB * srcAlpha + destB * destAlpha);
+
+        color = MFB_RGB(r, g, b);
+    }
+
     _buffer[index] = color;
 }
 

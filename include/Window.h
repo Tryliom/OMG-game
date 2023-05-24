@@ -21,7 +21,7 @@ private:
     void DrawPixel(uint32_t index, int color);
 
 	Position GetStartPosition(uint32_t width, uint32_t height, uint32_t x, uint32_t y, Pivot pivot);
-    Position GetRotatedPosition(uint32_t x, uint32_t y, Image image, Pivot pivot);
+    Position GetRotatedPosition(int x, int y, Image image, Pivot pivot);
 
 public:
     void Update();

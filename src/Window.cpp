@@ -138,7 +138,7 @@ Position Window::GetStartPosition(uint32_t width, uint32_t height, uint32_t x, u
 	return position;
 }
 
-Position Window::GetRotatedPosition(uint32_t x, uint32_t y, Image image, Pivot pivot)
+Position Window::GetRotatedPosition(int x, int y, Image image, Pivot pivot)
 {
     float angle = image.GetRotation();
     uint32_t width = image.GetWidth();

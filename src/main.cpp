@@ -16,7 +16,7 @@ int main()
 		window.DrawCustom();
 
 		bull.SetScale(5.f + sin(window.GetFrame() / 10.f));
-        //bull.SetRotation(window.GetFrame() / 100.f);
+        bull.SetRotation(window.GetFrame() / 100.f);
 
         if (Input::IsKeyHeld(KB_KEY_A))
         {
@@ -26,7 +26,8 @@ int main()
         {
             bullPosition.X += 1;
         }
-        else if (Input::IsKeyHeld(KB_KEY_W))
+
+        if (Input::IsKeyHeld(KB_KEY_W))
         {
             bullPosition.Y -= 1;
         }

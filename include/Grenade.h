@@ -1,21 +1,23 @@
 #pragma once
 
-#include "Utility.h"
 #include "Image.h"
+#include "Vector.h"
 #include "Window.h"
 
-class Enemy
+class Grenade
 {
 public:
-    Enemy();
+    Grenade();
 
 private:
     static Image Sprite;
 
-    Vector2F _position{};
-
-    float _speed = 2.f;
+    Vector2F _position {};
     Vector2F _direction = { 0.f, 0.f };
+
+    float _speed = 4.f;
+
+    bool _isExploded = true;
 
 public:
     void Update();
@@ -25,4 +27,7 @@ public:
     void SetPosition(Vector2F position) { _position = position; }
 
     void SetDirection(Vector2F direction) { _direction = direction; }
+
+    bool IsExploded() { return _isExploded; }
+    void SetExploded(bool isExploded) { _isExploded = isExploded; }
 };

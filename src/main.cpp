@@ -4,6 +4,9 @@
 #include "EnemyManager.h"
 #include "Utility.h"
 #include "Input.h"
+#include "Grenade.h"
+
+#include <iostream>
 
 int main()
 {
@@ -15,6 +18,7 @@ int main()
     Window window(width, height);
 	Player player;
 	EnemyManager enemyManager;
+    Grenade grenade;
 
     window.SetBackgroundColor(Color::White);
     player.SetPosition({ width / 2.f, height - 80.f });
@@ -34,6 +38,32 @@ int main()
             if (spawnRate > 60)
             {
                 spawnRate -= 1;
+            }
+        }
+
+        if (Input::IsMouseButtonPressed(MOUSE_LEFT) || Input::IsKeyPressed(KB_KEY_SPACE))
+        {
+            if (grenade.IsExploded())
+            {
+                grenade.SetPosition(player.GetPosition());
+                grenade.SetDirection(Utility::GetDirection(player.GetPosition(), player.GetPosition() + Vector2F{ 0.f, -100.f }));
+                grenade.SetExploded(false);
+            }
+            else
+            {
+                //TODO: Make it explode into a black hole that swallow all the enemies in a radius
+                grenade.SetExploded(true);
+            }
+        }
+
+        if (!grenade.IsExploded())
+        {
+            grenade.Update();
+            grenade.Draw(window);
+
+            if (grenade.GetPosition().Y < 0.f)
+            {
+                grenade.SetExploded(true);
             }
         }
 

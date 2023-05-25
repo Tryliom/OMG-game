@@ -6,8 +6,6 @@
 #include "Input.h"
 #include "Grenade.h"
 
-#include <iostream>
-
 int main()
 {
     const uint32_t width = 640;
@@ -19,12 +17,14 @@ int main()
 	Player player;
 	EnemyManager enemyManager;
     Grenade grenade;
-
-    window.SetBackgroundColor(Color::White);
+	
     player.SetPosition({ width / 2.f, height - 80.f });
 
     do {
 		auto frame = window.GetFrame();
+
+		// Make the background color change over time
+		window.SetBackgroundColor(Utility::ToColor(0, 20, 70) - Utility::ToColor(0, 0, (int) (sin(frame * 0.005f) * 10.f)));
 
         if (frame % spawnRate == 0)
         {

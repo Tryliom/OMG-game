@@ -78,4 +78,15 @@ namespace Utility
     {
         return radians * 180.f / 3.14159265f;
     }
+
+	uint32_t ToColor(int r, int g, int b, int a)
+	{
+		// 0 to 255
+		r = std::max(0, std::min(255, r));
+		g = std::max(0, std::min(255, g));
+		b = std::max(0, std::min(255, b));
+		a = std::max(0, std::min(255, a));
+
+		return (a << 24) | (r << 16) | (g << 8) | b;
+	}
 }

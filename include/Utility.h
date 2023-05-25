@@ -40,4 +40,5 @@ namespace Utility
 	int Range(int min, int max);
     float ToRadians(float degrees);
     float ToDegrees(float radians);
+	uint32_t ToColor(int r, int g, int b, int a = 255);
 }

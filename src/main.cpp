@@ -5,6 +5,7 @@
 #include "Utility.h"
 #include "Input.h"
 #include "Grenade.h"
+#include "BlackHole.h"
 
 int main()
 {
@@ -17,7 +18,8 @@ int main()
 	Player player;
 	EnemyManager enemyManager;
     Grenade grenade;
-	
+	BlackHole blackHole;
+
     player.SetPosition({ width / 2.f, height - 80.f });
 
     do {
@@ -41,7 +43,7 @@ int main()
             }
         }
 
-        if (Input::IsMouseButtonPressed(MOUSE_LEFT) || Input::IsKeyPressed(KB_KEY_SPACE))
+        if ((Input::IsMouseButtonPressed(MOUSE_LEFT) || Input::IsKeyPressed(KB_KEY_SPACE)) && !blackHole.IsActive())
         {
             if (grenade.IsExploded())
             {
@@ -51,8 +53,10 @@ int main()
             }
             else
             {
-                //TODO: Make it explode into a black hole that swallow all the enemies in a radius
                 grenade.SetExploded(true);
+
+				blackHole.Reset();
+				blackHole.SetPosition(grenade.GetPosition());
             }
         }
 
@@ -66,6 +70,14 @@ int main()
                 grenade.SetExploded(true);
             }
         }
+
+		if (blackHole.IsActive())
+		{
+			blackHole.Update();
+			blackHole.Draw(window);
+
+			//TODO: Swallow all enemies in range
+		}
 
 		player.Update();
         player.Draw(window);

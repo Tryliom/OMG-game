@@ -3,39 +3,45 @@
 #include "Enemy.h"
 #include "EnemyManager.h"
 #include "Utility.h"
+#include "Input.h"
 
 int main()
 {
     const uint32_t width = 640;
     const uint32_t height = 640;
 
+    int spawnRate = 200;
+
     Window window(width, height);
 	Player player;
 	EnemyManager enemyManager;
 
     window.SetBackgroundColor(Color::White);
-    player.SetPosition({ width / 2, height - 80 });
+    player.SetPosition({ width / 2.f, height - 80.f });
 
     do {
 		auto frame = window.GetFrame();
 
-		if (frame % 200 == 0)
-		{
-			Enemy enemy;
+        if (frame % spawnRate == 0)
+        {
+            Enemy enemy;
 
-			enemy.SetPosition({ Utility::Range(0, width), 0 });
-			enemy.SetDirection(Utility::GetDirection((Vector2F) enemy.GetPosition(), (Vector2F) player.GetPosition()));
+            enemy.SetPosition({ Utility::Range(50.f, (float) width - 50.f), - Utility::Range(50.f, 100.f) });
+            enemy.SetDirection(Utility::GetDirection((Vector2F) enemy.GetPosition(), (Vector2F) player.GetPosition()));
 
-			enemyManager.AddEnemy(enemy);
-		}
+            enemyManager.AddEnemy(enemy);
+
+            if (spawnRate > 60)
+            {
+                spawnRate -= 1;
+            }
+        }
 
 		player.Update();
         player.Draw(window);
 
 		enemyManager.Update(width, height);
 		enemyManager.Draw(window);
-
-        window.DrawText({.Text = std::to_string(frame), .Position = {10, 10}, .Color = Color::Green, .Pivot = Pivot::TopLeft});
 
         window.Update();
     }

@@ -15,10 +15,10 @@ void Enemy::Update()
     _position.Y += _direction.Y * _speed;
 }
 
-void Enemy::Draw(Window window) const
+void Enemy::Draw(Window& window) const
 {
     // Set rotation according to the direction
-    float angle = std::atan2(_direction.Y, _direction.X) * 180.f / 3.14159265f + 270.f;
+    float angle = Utility::ToDegrees(std::atan2(_direction.Y, _direction.X)) + 90.f;
 
     Sprite.SetRotation(angle);
 

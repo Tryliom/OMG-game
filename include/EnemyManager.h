@@ -13,7 +13,7 @@ private:
 
 public:
 	void Update(uint32_t width, uint32_t height);
-	void Draw(Window window);
+	void Draw(Window& window);
 
 	void AddEnemy(Enemy enemy);
 

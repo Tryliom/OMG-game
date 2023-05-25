@@ -2,6 +2,7 @@
 
 #include "MiniFB.h"
 #include <cstring>
+#include <iostream>
 
 bool keys[KB_KEY_LAST + 1];
 bool previousKeys[KB_KEY_LAST + 1];
@@ -50,12 +51,12 @@ namespace Input
 
     bool IsMouseButtonPressed(int button)
     {
-        return mouseButtons[button] && !previousMouseButtons[button];
+        return mouseButtons[button] && previousMouseButtons[button] == 0;
     }
 
     bool IsMouseButtonReleased(int button)
     {
-        return !mouseButtons[button] && previousMouseButtons[button];
+        return mouseButtons[button] == 0 && previousMouseButtons[button];
     }
 
     bool IsMouseButtonHeld(int button)

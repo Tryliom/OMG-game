@@ -36,6 +36,8 @@ Window::Window(uint32_t width, uint32_t height)
 
 void Window::Update()
 {
+    Input::Update();
+
     int state = mfb_update_ex(_window, _buffer, _width, _height);
 
     if (state < 0)
@@ -54,8 +56,6 @@ void Window::Update()
     }
 
 	_frame++;
-
-    Input::Update();
 }
 
 bool Window::IsOpen()
@@ -107,7 +107,7 @@ void Window::DrawPixel(uint32_t x, uint32_t y, int color)
 	DrawPixel(index, color);
 }
 
-void Window::DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, Color color)
+void Window::DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, int color)
 {
     for (uint32_t i = 0; i < length; i++)
     {
@@ -115,7 +115,7 @@ void Window::DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, Color c
     }
 }
 
-void Window::DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, Color color)
+void Window::DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, int color)
 {
     for (uint32_t i = 0; i < length; i++)
     {
@@ -123,7 +123,7 @@ void Window::DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, Color col
     }
 }
 
-void Window::DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color)
+void Window::DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, int color)
 {
     DrawHorizontalLine(x, y, width, color);
     DrawHorizontalLine(x, y + height - 1, width, color);
@@ -132,11 +132,45 @@ void Window::DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t heig
     DrawVerticalLine(x + width - 1, y, height, color);
 }
 
-void Window::DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color)
+void Window::DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, int color)
 {
     for (uint32_t i = 0; i < height; i++)
     {
         DrawHorizontalLine(x, y + i, width, color);
+    }
+}
+
+void Window::DrawLine(Vector2I start, Vector2I end, int color)
+{
+    // Use breseham algorithm
+    int dx = abs(end.X - start.X);
+    int dy = abs(end.Y - start.Y);
+    int sx = start.X < end.X ? 1 : -1;
+    int sy = start.Y < end.Y ? 1 : -1;
+    int err = dx - dy;
+
+    while (true)
+    {
+        DrawPixel(start.X, start.Y, color);
+
+        if (start.X == end.X && start.Y == end.Y)
+        {
+            break;
+        }
+
+        int e2 = 2 * err;
+
+        if (e2 > -dy)
+        {
+            err -= dy;
+            start.X += sx;
+        }
+
+        if (e2 < dx)
+        {
+            err += dx;
+            start.Y += sy;
+        }
     }
 }
 
@@ -163,8 +197,8 @@ Vector2I Window::GetRotatedPosition(int x, int y, Image image, Pivot pivot)
     float angle = image.GetRotation();
     int width = image.GetWidth();
     int height = image.GetHeight();
-    float sinAngle = sin(angle);
-    float cosAngle = cos(angle);
+    float sinAngle = sin(Utility::ToRadians(angle));
+    float cosAngle = cos(Utility::ToRadians(angle));
     Vector2I position {};
 
     if (pivot == Pivot::Center)

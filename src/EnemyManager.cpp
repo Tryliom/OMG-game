@@ -7,7 +7,7 @@ EnemyManager::EnemyManager()
 
 void EnemyManager::Update(uint32_t width, uint32_t height)
 {
-	for (uint32_t i = 0; i < _enemyCount; i++)
+    for (uint32_t i = 0; i < _enemyCount; i++)
 	{
 		_enemies[i].Update();
 
@@ -23,7 +23,7 @@ void EnemyManager::Update(uint32_t width, uint32_t height)
 	}
 }
 
-void EnemyManager::Draw(Window window)
+void EnemyManager::Draw(Window& window)
 {
 	for (uint32_t i = 0; i < _enemyCount; i++)
 	{

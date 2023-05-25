@@ -12,15 +12,22 @@ namespace Utility
 
 	float GetAngle(Vector2F a, Vector2F b)
 	{
-		return std::atan2(b.Y - a.Y, b.X - a.X) * 180.f / 3.14159265f;
+		return ToDegrees(std::atan2(b.Y - a.Y, b.X - a.X));
 	}
 
 	Vector2F GetDirection(Vector2F a, Vector2F b)
 	{
-		float angle = GetAngle(a, b);
+		Vector2F direction = { b.X - a.X, b.Y - a.Y };
 
-		return { std::cos(angle * 3.14159265f / 180.f), std::sin(angle * 3.14159265f / 180.f) };
+        float magnitude = std::sqrt(direction.X * direction.X + direction.Y * direction.Y);
+
+        return { direction.X / magnitude, direction.Y / magnitude };
 	}
+
+    Vector2F GetDirection(float angle)
+    {
+        return { std::cos(ToRadians(angle)), std::sin(ToRadians(angle)) };
+    }
 
 	float Range(float min, float max)
 	{
@@ -61,4 +68,14 @@ namespace Utility
 
 		return (int) distribute(generator) + offset;
 	}
+
+    float ToRadians(float degrees)
+    {
+        return degrees * 3.14159265f / 180.f;
+    }
+
+    float ToDegrees(float radians)
+    {
+        return radians * 180.f / 3.14159265f;
+    }
 }

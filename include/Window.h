@@ -45,12 +45,14 @@ public:
 
     void DrawPixel(uint32_t x, uint32_t y, int color);
 
-    void DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, Color color);
-    void DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, Color color);
+    void DrawHorizontalLine(uint32_t x, uint32_t y, uint32_t length, int color);
+    void DrawVerticalLine(uint32_t x, uint32_t y, uint32_t length, int color);
 
     // Top left pivot
-    void DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
-    void DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, Color color);
+    void DrawRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, int color);
+    void DrawFullRectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height, int color);
+
+    void DrawLine(Vector2I start, Vector2I end, int color);
 
 	void DrawImage(Image image, int x, int y, Pivot pivot = Pivot::Center);
 

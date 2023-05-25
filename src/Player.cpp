@@ -1,7 +1,6 @@
-#include "../include/Player.h"
+#include "Player.h"
 
-#include "MiniFB.h"
-#include "../include/Input.h"
+#include "Input.h"
 
 Player::Player() : _image("../assets/player.png")
 {
@@ -20,7 +19,7 @@ void Player::Update()
     }
 }
 
-void Player::Draw(Window window)
+void Player::Draw(Window &window)
 {
     window.DrawImage(_image, _position.X, _position.Y, Pivot::Center);
 }

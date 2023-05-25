@@ -13,6 +13,7 @@ void EnemyManager::Update(uint32_t width, uint32_t height)
 
 		// Check if enemy is out of bounds
 		auto position = _enemies[i].GetPosition();
+
 		if (position.X < 0 || position.X > width || position.Y > height)
 		{
 			_enemies[i] = _enemies[_enemyCount - 1];

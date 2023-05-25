@@ -9,6 +9,33 @@
 #include <cstdio>
 #include <cstring>
 
+Image::Image()
+{
+    _width = 0;
+    _height = 0;
+
+    _originalWidth = 0;
+    _originalHeight = 0;
+
+    _buffer = nullptr;
+    _originalBuffer = nullptr;
+}
+
+Image::Image(uint32_t width, uint32_t height, uint32_t* buffer)
+{
+    _width = width;
+    _height = height;
+
+    _originalWidth = width;
+    _originalHeight = height;
+
+    _buffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+    _originalBuffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+
+    memcpy(_buffer, buffer, width * height * sizeof(uint32_t));
+    memcpy(_originalBuffer, buffer, width * height * sizeof(uint32_t));
+}
+
 Image::Image(const char* filename)
 {
 	int width, height, channels;
@@ -77,4 +104,31 @@ void Image::SetScale(float factor)
 			_buffer[index] = _originalBuffer[originalIndex];
 		}
 	}
+}
+
+void Image::SetColor(uint32_t color)
+{
+    for (uint32_t i = 0; i < _width * _height; i++)
+    {
+        // Convert the color of the pixel by keeping the alpha channel
+        _buffer[i] = (_buffer[i] & 0xFF000000) | color;
+    }
+}
+
+Image Image::Cut(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+{
+    auto* buffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+
+    for (uint32_t j = 0; j < height; j++)
+    {
+        for (uint32_t i = 0; i < width; i++)
+        {
+            const uint32_t index = j * width + i;
+            const uint32_t originalIndex = (j + y) * _width + (i + x);
+
+            buffer[index] = _buffer[originalIndex];
+        }
+    }
+
+    return { width, height, buffer };
 }

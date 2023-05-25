@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 enum Color
 {
@@ -32,6 +33,16 @@ struct Vector2I
 	{
 		return { (float)X, (float)Y };
 	}
+};
+
+struct Text
+{
+    std::string Text;
+    float Size { 32.f };
+    Vector2I Position { 0, 0 };
+    Color Color { Color::White };
+    Pivot Pivot { Pivot::TopLeft };
+    bool Shadow { true };
 };
 
 namespace Utility

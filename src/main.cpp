@@ -13,6 +13,7 @@ int main()
 	Player player;
 	EnemyManager enemyManager;
 
+    window.SetBackgroundColor(Color::White);
     player.SetPosition({ width / 2, height - 80 });
 
     do {
@@ -22,7 +23,7 @@ int main()
 		{
 			Enemy enemy;
 
-			enemy.SetPosition({ Utility::Range(0, width), 100 });
+			enemy.SetPosition({ Utility::Range(0, width), 0 });
 			enemy.SetDirection(Utility::GetDirection((Vector2F) enemy.GetPosition(), (Vector2F) player.GetPosition()));
 
 			enemyManager.AddEnemy(enemy);
@@ -33,6 +34,8 @@ int main()
 
 		enemyManager.Update(width, height);
 		enemyManager.Draw(window);
+
+        window.DrawText({.Text = std::to_string(frame), .Position = {10, 10}, .Color = Color::Green, .Pivot = Pivot::TopLeft});
 
         window.Update();
     }

@@ -1,7 +1,6 @@
 #include "Enemy.h"
 
 #include <cmath>
-#include <iostream>
 
 Image Enemy::Sprite("../assets/enemy.png");
 

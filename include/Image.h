@@ -5,6 +5,8 @@
 class Image
 {
 public:
+    Image();
+    Image(uint32_t width, uint32_t height, uint32_t* buffer);
 	explicit Image(const char* filename);
 
 private:
@@ -32,4 +34,7 @@ public:
 
     void SetRotation(float angle);
 	void SetScale(float factor);
+    void SetColor(uint32_t color);
+
+    Image Cut(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 };

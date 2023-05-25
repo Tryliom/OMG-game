@@ -110,8 +110,21 @@ void Image::SetColor(uint32_t color)
 {
     for (uint32_t i = 0; i < _width * _height; i++)
     {
-        // Convert the color of the pixel by keeping the alpha channel
-        _buffer[i] = (_buffer[i] & 0xFF000000) | color;
+        if (_buffer[i] == 0x00000000) continue;
+
+		const uint8_t r = (color >> 16) & 0xFF;
+		const uint8_t g = (color >> 8) & 0xFF;
+		const uint8_t b = (color >> 0) & 0xFF;
+
+		const uint8_t originalR = (_buffer[i] >> 16) & 0xFF;
+		const uint8_t originalG = (_buffer[i] >> 8) & 0xFF;
+		const uint8_t originalB = (_buffer[i] >> 0) & 0xFF;
+
+		const auto finalR = (uint8_t) ((r + originalR) / 2);
+		const auto finalG = (uint8_t) ((g + originalG) / 2);
+		const auto finalB = (uint8_t) ((b + originalB) / 2);
+
+		_buffer[i] = 0xFF000000 | (finalR << 16) | (finalG << 8) | finalB;
     }
 }
 

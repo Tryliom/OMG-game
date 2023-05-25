@@ -2,7 +2,7 @@
 
 EnemyManager::EnemyManager()
 {
-
+	Enemy::Sprite.SetColor(0xFFFF3355);
 }
 
 void EnemyManager::Update(uint32_t width, uint32_t height)

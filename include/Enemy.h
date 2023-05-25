@@ -10,14 +10,14 @@ public:
     Enemy();
 
 private:
-    static Image Sprite;
-
     Vector2F _position{};
 
     float _speed = 2.f;
     Vector2F _direction = { 0.f, 0.f };
 
 public:
+	static Image Sprite;
+
     void Update();
     void Draw(Window& window) const;
 

@@ -5,6 +5,7 @@
 Player::Player() : _image("../assets/player.png")
 {
     _position = { 0, 0 };
+    _image.SetColor(0xFF4444FF);
 }
 
 void Player::Update()

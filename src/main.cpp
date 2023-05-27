@@ -76,7 +76,7 @@ int main()
 			blackHole.Update();
 			blackHole.Draw(window);
 
-			//TODO: Swallow all enemies in range
+			enemyManager.CheckCollision(blackHole.GetPosition(), blackHole.GetRadius());
 		}
 
 		player.Update();

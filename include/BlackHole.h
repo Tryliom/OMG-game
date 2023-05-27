@@ -25,7 +25,7 @@ public:
 	Vector2F GetPosition() { return _position; }
 	void SetPosition(Vector2F position) { _position = position; }
 
-	void SetRotation(float rotation) { _image.SetRotation(rotation); }
+	float GetRadius() { return _image.GetScale() * 25.f; }
 
 	[[nodiscard]] bool IsActive() const { return _isActive; }
 };

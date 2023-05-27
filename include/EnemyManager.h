@@ -17,6 +17,8 @@ public:
 
 	void AddEnemy(Enemy enemy);
 
+	void CheckCollision(Vector2F position, float radius);
+
 	[[nodiscard]] uint32_t GetEnemyCount() const { return _enemyCount; }
 	Enemy* GetEnemies() { return _enemies; }
 };

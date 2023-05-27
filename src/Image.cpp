@@ -104,17 +104,28 @@ void Image::SetScale(float factor)
 			_buffer[index] = _originalBuffer[originalIndex];
 		}
 	}
+
+	ApplyColor();
 }
 
 void Image::SetColor(uint32_t color)
 {
-    for (uint32_t i = 0; i < _width * _height; i++)
-    {
-        if (_buffer[i] == 0x00000000) continue;
+	_color = color;
 
-		const uint8_t r = (color >> 16) & 0xFF;
-		const uint8_t g = (color >> 8) & 0xFF;
-		const uint8_t b = (color >> 0) & 0xFF;
+    ApplyColor();
+}
+
+void Image::ApplyColor()
+{
+	if (_color == 0xFFFFFFFF) return;
+
+	for (uint32_t i = 0; i < _width * _height; i++)
+	{
+		if (_buffer[i] == 0x00000000) continue;
+
+		const uint8_t r = (_color >> 16) & 0xFF;
+		const uint8_t g = (_color >> 8) & 0xFF;
+		const uint8_t b = (_color >> 0) & 0xFF;
 
 		const uint8_t originalR = (_buffer[i] >> 16) & 0xFF;
 		const uint8_t originalG = (_buffer[i] >> 8) & 0xFF;
@@ -125,7 +136,7 @@ void Image::SetColor(uint32_t color)
 		const auto finalB = (uint8_t) ((b + originalB) / 2);
 
 		_buffer[i] = 0xFF000000 | (finalR << 16) | (finalG << 8) | finalB;
-    }
+	}
 }
 
 Image Image::Cut(uint32_t x, uint32_t y, uint32_t width, uint32_t height)

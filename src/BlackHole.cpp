@@ -4,6 +4,8 @@ BlackHole::BlackHole() : _image("../assets/black_hole.png")
 {
 	Reset();
 	_isActive = false;
+
+	_image.SetColor(Utility::ToColor(0, 0, 0));
 }
 
 void BlackHole::Reset()

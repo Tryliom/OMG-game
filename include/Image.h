@@ -22,6 +22,9 @@ private:
 
 	float _scale = 1.f;
     float _rotation = 0.f;
+	uint32_t _color = 0xFFFFFFFF;
+
+	void ApplyColor();
 
 public:
 	[[nodiscard]] uint32_t GetWidth() const { return _width; }

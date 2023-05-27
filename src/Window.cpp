@@ -70,10 +70,10 @@ void Window::DrawPixel(uint32_t index, int color)
         return;
     }
 
-    if (_buffer[index] != 0)
+    if (_buffer[index] != 0 && color >> 24 != 255)
     {
         // Alpha blending
-        const float srcAlpha = (float) ((uint8_t) (color >> 24)) / 256.f;
+        const float srcAlpha = (float) ((uint8_t) (color >> 24)) / 255.f;
         const float destAlpha = 1.f - srcAlpha;
         const uint32_t destColor = _buffer[index];
 

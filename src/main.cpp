@@ -9,6 +9,8 @@
 
 int main()
 {
+	//TODO: Add score, add level to blackhole for each kills that increase his max scale
+
     const uint32_t width = 640;
     const uint32_t height = 640;
 

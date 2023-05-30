@@ -49,7 +49,7 @@ void Enemy::Swallow(Vector2F target)
 {
 	_swallowTarget = target;
 	_isSwallowed = true;
-	_speed = 5.f;
+	_speed = 4.f;
 	_direction = Utility::GetDirection(_position, target);
 	_swallowDistance = Utility::GetDistance(_position, target);
 }

@@ -188,6 +188,11 @@ Vector2I Window::GetStartPosition(uint32_t width, uint32_t height, int x, int y,
 		position.X = x;
 		position.Y = y;
 	}
+	else if (pivot == Pivot::TopRight)
+	{
+		position.X = x - width;
+		position.Y = y;
+	}
 
 	return position;
 }
@@ -214,6 +219,13 @@ Vector2I Window::GetRotatedPosition(int x, int y, Image image, Pivot pivot)
         position.X = (int) (x * cosAngle - y * sinAngle);
         position.Y = (int) (x * sinAngle + y * cosAngle);
     }
+	else if (pivot == Pivot::TopRight)
+	{
+		x -= width;
+
+		position.X = (int) (x * cosAngle - y * sinAngle) + width;
+		position.Y = (int) (x * sinAngle + y * cosAngle);
+	}
 
     return position;
 }
@@ -325,7 +337,7 @@ void Window::DrawText(Text text)
             c = '?';
         }
 
-        width += _charsImage[c].GetWidth() + _chars[c].charOffsetX;
+        width += _charsImage[c].GetWidth();
 
         if (height < _charsImage[c].GetHeight())
         {
@@ -355,7 +367,7 @@ void Window::DrawText(Text text)
             DrawImage(_charsImage[c],position.X + _chars[c].charOffsetX + shadowOffset,position.Y + _chars[c].charOffsetY + shadowOffset, text.Pivot);
         }
 
-        _charsImage[c].SetColor(text.Color);
+        _charsImage[c].SetColor(Color::White);
 
         DrawImage(_charsImage[c],position.X + _chars[c].charOffsetX,position.Y + _chars[c].charOffsetY, text.Pivot);
 

@@ -16,9 +16,12 @@ private:
 	int _frame { 0 };
 	bool _isActive { false };
 
+	float _maxScale { 5.f };
+
 public:
 	void Reset();
 
+	void UpdateMaxScale(int score);
 	void Update();
 	void Draw(Window& window);
 

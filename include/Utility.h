@@ -17,7 +17,8 @@ enum Color
 enum Pivot
 {
     TopLeft,
-    Center
+    Center,
+	TopRight,
 };
 
 struct Text
@@ -25,7 +26,7 @@ struct Text
     std::string Text;
     float Size { 32.f };
     Vector2I Position { 0, 0 };
-    Color Color { Color::White };
+	uint32_t Color { 0xFFFFFFFF };
     Pivot Pivot { Pivot::TopLeft };
     bool Shadow { true };
 };

@@ -14,6 +14,14 @@ void BlackHole::Reset()
 	_frame = 0;
 	_image.SetScale(0.1f);
 	_isActive = true;
+	_maxScale = 5.f;
+}
+
+void BlackHole::UpdateMaxScale(int score)
+{
+	_maxScale = 5.f + score / 200.f;
+
+	if (_maxScale > 15.f) _maxScale = 15.f;
 }
 
 void BlackHole::Update()
@@ -22,11 +30,11 @@ void BlackHole::Update()
 
 	if (_frame < 100)
 	{
-		_image.SetScale(_image.GetScale() + 0.05f + 0.1f * _frame / 100.f);
+		_image.SetScale(_maxScale * _frame / 100.f);
 	}
 	else
 	{
-		_image.SetScale(_image.GetScale() - _image.GetScale() * 0.1f * (_frame - 100.f) / 50.f);
+		_image.SetScale(_maxScale * (1.f - (_frame - 100) / 50.f));
 	}
 
 	_image.SetRotation(_image.GetRotation() + 1.f + 3.f * _frame / 150.f);

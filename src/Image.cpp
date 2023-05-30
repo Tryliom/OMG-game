@@ -82,6 +82,10 @@ void Image::SetRotation(float angle)
 
 void Image::SetScale(float factor)
 {
+	if (factor == _scale) return;
+
+	if (factor < 0.1f) factor = 0.1f;
+
 	_scale = factor;
 
 	_width = _originalWidth * factor;
@@ -110,15 +114,15 @@ void Image::SetScale(float factor)
 
 void Image::SetColor(uint32_t color)
 {
+	bool changed = _color != color;
+
 	_color = color;
 
-    ApplyColor();
+	if (changed) ApplyColor();
 }
 
 void Image::ApplyColor()
 {
-	if (_color == 0xFFFFFFFF) return;
-
 	for (uint32_t i = 0; i < _width * _height; i++)
 	{
 		if (_buffer[i] == 0x00000000) continue;

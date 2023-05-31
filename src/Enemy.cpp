@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "AudioManager.h"
 
 #include <cmath>
 
@@ -52,4 +53,6 @@ void Enemy::Swallow(Vector2F target)
 	_speed = 4.f;
 	_direction = Utility::GetDirection(_position, target);
 	_swallowDistance = Utility::GetDistance(_position, target);
+
+    AudioManager::Play(AudioType::Swallow);
 }

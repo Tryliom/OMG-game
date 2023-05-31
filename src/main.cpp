@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Grenade.h"
 #include "BlackHole.h"
+#include "AudioManager.h"
 
 const uint32_t width = 640;
 const uint32_t height = 640;
@@ -58,12 +59,16 @@ void OnShoot()
 {
 	if (grenade.IsExploded())
 	{
+        AudioManager::Play(AudioType::Shoot);
+
 		grenade.SetPosition(player.GetPosition());
 		grenade.SetDirection(Utility::GetDirection(player.GetPosition(), player.GetPosition() + Vector2F{ 0.f, -100.f }));
 		grenade.SetExploded(false);
 	}
 	else
 	{
+        AudioManager::Play(AudioType::BlackHole);
+
 		grenade.SetExploded(true);
 
 		blackHole.Reset();
@@ -125,6 +130,8 @@ int main()
 {
 	Reset();
 	enemyManager.SetOnEnemySwallowed(OnEnemySwallowed);
+    AudioManager::Init();
+    AudioManager::Play(AudioType::MainMusic);
 
     do {
 		auto frame = window.GetFrame();

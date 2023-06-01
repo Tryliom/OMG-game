@@ -131,7 +131,7 @@ int main()
 	Reset();
 	enemyManager.SetOnEnemySwallowed(OnEnemySwallowed);
     AudioManager::Init();
-    AudioManager::Play(AudioType::MainMusic);
+    AudioManager::Play(AudioType::MainMusic, true);
 
     do {
 		auto frame = window.GetFrame();

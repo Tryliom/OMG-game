@@ -27,7 +27,9 @@ void audioCallback(float* buffer, int numFrames, int numChannels)
         {
             auto& audioBuffer = audioBuffers[i];
 
-            currentSample += audioBuffer.Data[audioBuffer.FrameCount];
+            if (!audioBuffer.IsPlaying) continue;
+
+            currentSample += audioBuffer.Data[audioBuffer.FrameCount] * audioBuffer.Volume;
             audioBuffer.FrameCount++;
 
             if (audioBuffer.FrameCount >= audioBuffer.Data.size())
@@ -49,6 +51,53 @@ void audioCallback(float* buffer, int numFrames, int numChannels)
     }
 }
 
+float* getSamples(stb_vorbis* vorbis, int channels, int sampleCount)
+{
+    auto* samples = new float[sampleCount];
+    auto sampleIndex = 0;
+
+    while (true)
+    {
+        auto readSamples = stb_vorbis_get_samples_float_interleaved(vorbis, channels, samples + sampleIndex, sampleCount - sampleIndex);
+        sampleIndex += readSamples * channels;
+
+        // Add all channels together
+        for (auto i = 0; i < readSamples; i++)
+        {
+            auto sampleValue = 0.f;
+            for (auto channel = 0; channel < channels; channel++)
+            {
+                sampleValue += samples[i * channels + channel];
+            }
+            samples[i] = sampleValue / (float) channels;
+        }
+
+        if (readSamples == 0) break;
+    }
+
+    return samples;
+}
+
+Sample loadSample(const char* path)
+{
+    // Get sample data from ogg file
+    stb_vorbis* vorbis = stb_vorbis_open_filename(path, nullptr, nullptr);
+    if (vorbis == nullptr)
+    {
+        std::cout << "Failed to load sample: " << path << std::endl;
+        return {};
+    }
+
+    stb_vorbis_info info = stb_vorbis_get_info(vorbis);
+    auto channels = info.channels;
+    auto sampleCount = (int) stb_vorbis_stream_length_in_samples(vorbis) * channels;
+    auto* samples = getSamples(vorbis, channels, sampleCount);
+
+    stb_vorbis_close(vorbis);
+
+    return { std::vector<float>(samples, samples + sampleCount) };
+}
+
 namespace AudioManager
 {
     void Init()
@@ -62,68 +111,55 @@ namespace AudioManager
             }
         });
 
-        audioSamples[AudioType::Shoot] = AudioManager::LoadSample("../assets/sounds/shoot.ogg");
-        audioSamples[AudioType::BlackHole] = AudioManager::LoadSample("../assets/sounds/blackHole.ogg");
-        audioSamples[AudioType::Swallow] = AudioManager::LoadSample("../assets/sounds/swallow.ogg");
-        audioSamples[AudioType::MainMusic] = AudioManager::LoadSample("../assets/sounds/mainMusic.ogg");
-        audioSamples[AudioType::MainMusic].Repeat = true;
+        audioSamples[AudioType::Shoot] = loadSample("../assets/sounds/shoot.ogg");
+        audioSamples[AudioType::BlackHole] = loadSample("../assets/sounds/blackHole.ogg");
+        audioSamples[AudioType::Swallow] = loadSample("../assets/sounds/swallow.ogg");
+        audioSamples[AudioType::MainMusic] = loadSample("../assets/sounds/mainMusic.ogg");
     }
 
-    void Play(AudioType audioType)
+    void Play(AudioType audioType, bool repeat, float volume)
     {
         audioBuffers.push_back(audioSamples[audioType]);
+
+        auto& audioBuffer = audioBuffers[audioBuffers.size() - 1];
+
+        audioBuffer.Repeat = repeat;
+        audioBuffer.Volume = volume;
+        audioBuffer.IsPlaying = true;
     }
 
-    Sample LoadSample(const char* path)
+    void Stop(AudioType audioType)
     {
-        Sample sample = {};
-
-        // Get sample data from ogg file
-        stb_vorbis* vorbis = stb_vorbis_open_filename(path, nullptr, nullptr);
-        if (vorbis == nullptr)
+        for (auto i = 0; i < audioBuffers.size(); i++)
         {
-            std::cout << "Failed to load sample: " << path << std::endl;
-            return sample;
-        }
-
-        stb_vorbis_info info = stb_vorbis_get_info(vorbis);
-
-        int channels = info.channels;
-        int sampleRate = info.sample_rate;
-
-        int sampleCount = stb_vorbis_stream_length_in_samples(vorbis) * channels;
-
-        auto* samples = new float[sampleCount];
-        int sampleIndex = 0;
-
-        while (true)
-        {
-            int readSamples = stb_vorbis_get_samples_float_interleaved(vorbis, channels, samples + sampleIndex, sampleCount - sampleIndex);
-            sampleIndex += readSamples * channels;
-
-            // Add all channels together
-            for (auto i = 0; i < readSamples; i++)
+            auto& audioBuffer = audioBuffers[i];
+            if (audioBuffer.Data == audioSamples[audioType].Data)
             {
-                float sampleValue = 0.f;
-                for (auto channel = 0; channel < channels; channel++)
-                {
-                    sampleValue += samples[i * channels + channel];
-                }
-                samples[i] = sampleValue / channels;
-            }
-
-            if (readSamples == 0)
-            {
-                break;
+                audioBuffers.erase(audioBuffers.begin() + i);
+                i--;
             }
         }
+    }
 
-        stb_vorbis_close(vorbis);
+    void Pause(AudioType audioType)
+    {
+        for (auto & audioBuffer : audioBuffers)
+        {
+            if (audioBuffer.Data == audioSamples[audioType].Data)
+            {
+                audioBuffer.IsPlaying = false;
+            }
+        }
+    }
 
-        sample.Data = std::vector<float>(samples, samples + sampleCount);
-        sample.FrameCount = 0;
-        sample.Repeat = false;
-
-        return sample;
+    void Resume(AudioType audioType)
+    {
+        for (auto & audioBuffer : audioBuffers)
+        {
+            if (audioBuffer.Data == audioSamples[audioType].Data)
+            {
+                audioBuffer.IsPlaying = true;
+            }
+        }
     }
 }

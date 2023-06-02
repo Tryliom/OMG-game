@@ -180,7 +180,6 @@ int main()
 			}
 		}
 
-
 	    window.Update();
     }
     while (window.IsOpen());

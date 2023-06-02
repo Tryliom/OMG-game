@@ -26,4 +26,5 @@ namespace AudioManager
     void Stop(AudioType audioType);
     void Pause(AudioType audioType);
     void Resume(AudioType audioType);
+	void SetGlobalVolume(float volume);
 }

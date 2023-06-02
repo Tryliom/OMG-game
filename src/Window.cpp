@@ -270,7 +270,7 @@ void Window::DrawPlasma()
 	{
 		for (uint32_t x = 0; x < _width; x++)
 		{
-			uint32_t color;
+			int color;
 
 			float screenX = (float) x / (float) _width;
 			float screenY = (float) y / (float) _height;
@@ -282,7 +282,7 @@ void Window::DrawPlasma()
 
 			float colorValue = xSinValue + ySinValue + positionSinValue + sqrtSinValue + colorBlurOffset;
 
-			color = (uint32_t) (colorValue * 32.f);
+			color = (int) (colorValue * 32.f);
 
 			DrawPixel(x, y, color);
 		}
@@ -305,7 +305,7 @@ void Window::DrawCustom()
 
 			const uint32_t distanceSquared = dx * dx + dy * dy;
 
-			const uint32_t color = distanceSquared * colorMultiplier - _frame * _frame * speed /*sin(cos(_frame) * cos(_frame)) * cos(sin(_frame) * sin(_frame))*/;
+			const int color = (int) (distanceSquared * colorMultiplier - _frame * _frame * speed) /*sin(cos(_frame) * cos(_frame)) * cos(sin(_frame) * sin(_frame))*/;
 
 			DrawPixel(x, y, color);
 		}

@@ -162,4 +162,9 @@ namespace AudioManager
             }
         }
     }
+
+	void SetGlobalVolume(float volume)
+	{
+		volume = volume;
+	}
 }

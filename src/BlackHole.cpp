@@ -1,6 +1,6 @@
-#include "BlackHole.hpp"
+#include "BlackHole.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #define IMG_PATH "assets/black_hole.png"
 #else
 #define IMG_PATH "../assets/black_hole.png"

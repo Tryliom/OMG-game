@@ -2,7 +2,7 @@
 #include <map>
 #include <iostream>
 
-#include "AudioManager.hpp"
+#include "AudioManager.h"
 
 #define SOKOL_IMPL
 #include "sokol_log.h"

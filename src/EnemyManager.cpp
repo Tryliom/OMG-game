@@ -1,6 +1,6 @@
-#include "EnemyManager.hpp"
+#include "EnemyManager.h"
 
-#include "Window.hpp"
+#include "Window.h"
 
 EnemyManager::EnemyManager()
 {

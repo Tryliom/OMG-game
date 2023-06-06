@@ -1,8 +1,8 @@
-#include "Window.hpp"
+#include "Window.h"
 
 #include "MiniFB.h"
-#include "Input.hpp"
-#include "Timer.hpp"
+#include "Input.h"
+#include "Timer.h"
 
 #if defined(_WIN32)
     #include "malloc.h"

@@ -3,9 +3,9 @@
 #include <cstdint>
 #include <map>
 
-#include "Image.hpp"
-#include "Utility.hpp"
-#include "Font.hpp"
+#include "Image.h"
+#include "Utility.h"
+#include "Font.h"
 
 class Window
 {

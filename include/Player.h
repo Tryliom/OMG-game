@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Utility.hpp"
-#include "Image.hpp"
-#include "Window.hpp"
+#include "Utility.h"
+#include "Image.h"
+#include "Window.h"
 
 class Player
 {

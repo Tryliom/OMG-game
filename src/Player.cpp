@@ -1,9 +1,9 @@
-#include "Player.hpp"
+#include "Player.h"
 
-#include "Input.hpp"
-#include "Timer.hpp"
+#include "Input.h"
+#include "Timer.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #define IMG_PATH "assets/player.png"
 #else
 #define IMG_PATH "../assets/player.png"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MiniFB.h"
-#include "Utility.hpp"
+#include "Utility.h"
 
 namespace Input
 {

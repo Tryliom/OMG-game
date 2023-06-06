@@ -1,8 +1,8 @@
-#include "Grenade.hpp"
+#include "Grenade.h"
 
-#include "Timer.hpp"
+#include "Timer.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #define IMG_PATH "assets/grenade.png"
 #else
 #define IMG_PATH "../assets/grenade.png"

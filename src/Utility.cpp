@@ -1,4 +1,4 @@
-#include "Utility.hpp"
+#include "Utility.h"
 
 #include <cmath>
 #include <random>

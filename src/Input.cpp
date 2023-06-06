@@ -1,4 +1,4 @@
-#include "Input.hpp"
+#include "Input.h"
 
 #include "MiniFB.h"
 #include <cstring>

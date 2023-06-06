@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Utility.hpp"
-#include "Image.hpp"
+#include "Utility.h"
+#include "Image.h"
 
 struct Window;
 

@@ -1,12 +1,12 @@
-#include "Enemy.hpp"
+#include "Enemy.h"
 
-#include "AudioManager.hpp"
-#include "Timer.hpp"
-#include "Window.hpp"
+#include "AudioManager.h"
+#include "Timer.h"
+#include "Window.h"
 
 #include <cmath>
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #define IMG_PATH "assets/enemy.png"
 #else
 #define IMG_PATH "../assets/enemy.png"

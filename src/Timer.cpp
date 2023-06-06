@@ -1,10 +1,10 @@
-#include "Timer.h"
+#include "Timer.hpp"
 
 #include "MiniFB.h"
 
 float deltaTime = 0.f;
 int deltaFrames = 0;
-float time = 0.f;
+float totalTime = 0.f;
 bool stabilized = false;
 mfb_timer* timer;
 
@@ -20,22 +20,18 @@ namespace Timer
 	{
 		deltaTime = mfb_timer_delta(timer);
 		deltaFrames++;
-		time += deltaTime;
+		totalTime += deltaTime;
 
-		if (deltaFrames < 200 && !stabilized)
-		{
-			time = 0;
-		}
-		else if (deltaFrames == 201 && !stabilized)
+		if (deltaFrames == 201 && !stabilized)
 		{
 			deltaFrames = 1;
-			time = deltaTime;
+			totalTime = deltaTime;
 			stabilized = true;
 		}
 
-		if (time > 99999.f)
+		if (totalTime > 99999.f)
 		{
-			time -= 99999.f;
+			totalTime -= 99999.f;
 			deltaFrames = 0;
 		}
 	}
@@ -44,11 +40,6 @@ namespace Timer
 	{
 		if (!stabilized) return deltaTime;
 
-		return time / deltaFrames;
-	}
-
-	float GetTime()
-	{
-		return time;
+		return totalTime / deltaFrames;
 	}
 }

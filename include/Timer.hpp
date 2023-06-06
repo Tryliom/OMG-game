@@ -6,5 +6,4 @@ namespace Timer
 	void Update();
 
 	float GetDeltaTime();
-	float GetTime();
 }

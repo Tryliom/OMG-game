@@ -9,7 +9,7 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include all cpp and h files
-file(GLOB_RECURSE SRC src/*.cpp include/*.h)
+file(GLOB_RECURSE SRC src/*.cpp include/*.hpp)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SRC})

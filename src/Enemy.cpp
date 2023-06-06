@@ -1,12 +1,18 @@
-#include "Enemy.h"
+#include "Enemy.hpp"
 
-#include "AudioManager.h"
-#include "Timer.h"
-#include "Window.h"
+#include "AudioManager.hpp"
+#include "Timer.hpp"
+#include "Window.hpp"
 
 #include <cmath>
 
-Image Enemy::Sprite("../assets/enemy.png");
+#ifdef EMSCRIPTEN
+#define IMG_PATH "assets/enemy.png"
+#else
+#define IMG_PATH "../assets/enemy.png"
+#endif
+
+Image Enemy::Sprite(IMG_PATH);
 
 Enemy::Enemy()
 {

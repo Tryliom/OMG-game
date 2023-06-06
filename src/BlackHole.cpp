@@ -1,6 +1,12 @@
-#include "BlackHole.h"
+#include "BlackHole.hpp"
 
-BlackHole::BlackHole() : _image("../assets/black_hole.png")
+#ifdef EMSCRIPTEN
+#define IMG_PATH "assets/black_hole.png"
+#else
+#define IMG_PATH "../assets/black_hole.png"
+#endif
+
+BlackHole::BlackHole() : _image(IMG_PATH)
 {
 	Reset();
 	_isActive = false;

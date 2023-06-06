@@ -1,12 +1,12 @@
-#include "Window.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "EnemyManager.h"
-#include "Utility.h"
-#include "Input.h"
-#include "Grenade.h"
-#include "BlackHole.h"
-#include "AudioManager.h"
+#include "Window.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
+#include "EnemyManager.hpp"
+#include "Utility.hpp"
+#include "Input.hpp"
+#include "Grenade.hpp"
+#include "BlackHole.hpp"
+#include "AudioManager.hpp"
 
 const uint32_t width = 640;
 const uint32_t height = 640;

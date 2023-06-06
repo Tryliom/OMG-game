@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Image.h"
-#include "Vector.h"
-#include "Window.h"
+#include "Image.hpp"
+#include "Vector.hpp"
+#include "Window.hpp"
 
 class Grenade
 {

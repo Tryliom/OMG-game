@@ -1,8 +1,8 @@
-#include "Window.h"
+#include "Window.hpp"
 
 #include "MiniFB.h"
-#include "Input.h"
-#include "Timer.h"
+#include "Input.hpp"
+#include "Timer.hpp"
 
 #if defined(_WIN32)
     #include "malloc.h"
@@ -17,7 +17,7 @@ Window::Window(uint32_t width, uint32_t height)
 
     _background = Color::Black;
 
-    _window = mfb_open_ex("Black hole shooter", width, height, false);
+    _window = mfb_open_ex("Game", width, height, false);
     _buffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
 
     Input::Initialize(_window);

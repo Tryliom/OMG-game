@@ -1,8 +1,14 @@
-#include "Grenade.h"
+#include "Grenade.hpp"
 
-#include "Timer.h"
+#include "Timer.hpp"
 
-Image Grenade::Sprite("../assets/grenade.png");
+#ifdef EMSCRIPTEN
+#define IMG_PATH "assets/grenade.png"
+#else
+#define IMG_PATH "../assets/grenade.png"
+#endif
+
+Image Grenade::Sprite(IMG_PATH);
 
 Grenade::Grenade()
 {

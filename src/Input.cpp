@@ -2,7 +2,6 @@
 
 #include "MiniFB.h"
 #include <cstring>
-#include <iostream>
 
 bool keys[KB_KEY_LAST + 1];
 bool previousKeys[KB_KEY_LAST + 1];

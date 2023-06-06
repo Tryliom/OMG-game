@@ -1,5 +1,7 @@
 #include "Grenade.h"
 
+#include "Timer.h"
+
 Image Grenade::Sprite("../assets/grenade.png");
 
 Grenade::Grenade()
@@ -9,8 +11,8 @@ Grenade::Grenade()
 
 void Grenade::Update()
 {
-    _position.X += _direction.X * _speed;
-    _position.Y += _direction.Y * _speed;
+    _position.X += _direction.X * _speed * Timer::GetDeltaTime();
+    _position.Y += _direction.Y * _speed * Timer::GetDeltaTime();
 }
 
 void Grenade::Draw(Window& window) const

@@ -15,7 +15,7 @@ private:
     Vector2F _position {};
     Vector2F _direction = { 0.f, 0.f };
 
-    float _speed = 4.f;
+    float _speed = 600.f;
 
     bool _isExploded = true;
 

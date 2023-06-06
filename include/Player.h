@@ -13,7 +13,7 @@ private:
     Image _image;
     Vector2F _position {};
 
-    float _speed = 2.f;
+    float _speed = 400.f;
 
 public:
     void Update();

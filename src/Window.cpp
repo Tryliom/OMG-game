@@ -2,13 +2,13 @@
 
 #include "MiniFB.h"
 #include "Input.h"
+#include "Timer.h"
 
 #if defined(_WIN32)
     #include "malloc.h"
 #endif
 #include <cstring>
 #include <cmath>
-#include <iostream>
 
 Window::Window(uint32_t width, uint32_t height)
 {
@@ -21,6 +21,7 @@ Window::Window(uint32_t width, uint32_t height)
     _buffer = (uint32_t*) malloc(width * height * sizeof(uint32_t));
 
     Input::Initialize(_window);
+	Timer::Init();
 
     // Assign each chars to an image using char value as index
     auto font = Image(ATLAS_FONT_IMAGE_PATH);
@@ -37,6 +38,7 @@ Window::Window(uint32_t width, uint32_t height)
 void Window::Update()
 {
     Input::Update();
+	Timer::Update();
 
     int state = mfb_update_ex(_window, _buffer, _width, _height);
 

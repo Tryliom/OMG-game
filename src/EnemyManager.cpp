@@ -1,5 +1,7 @@
 #include "EnemyManager.h"
 
+#include "Window.h"
+
 EnemyManager::EnemyManager()
 {
 	Enemy::Sprite.SetColor(0xFFFF3355);

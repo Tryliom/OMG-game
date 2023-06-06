@@ -3,6 +3,7 @@
 #include "Enemy.h"
 
 #include <functional>
+#include <utility>
 
 class EnemyManager
 {
@@ -23,7 +24,7 @@ public:
 	void CheckCollisionWithBlackHole(Vector2F position, float radius);
 	bool HasCollidedAt(Vector2F position, float radius);
 
-	void SetOnEnemySwallowed(std::function<void(Enemy)> onEnemySwallowed) { _onEnemySwallowed = onEnemySwallowed; }
+	void SetOnEnemySwallowed(std::function<void(Enemy)> onEnemySwallowed) { _onEnemySwallowed = std::move(onEnemySwallowed); }
 
 	void Clear() { _enemyCount = 0; }
 };

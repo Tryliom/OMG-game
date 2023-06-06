@@ -2,7 +2,8 @@
 
 #include "Utility.h"
 #include "Image.h"
-#include "Window.h"
+
+struct Window;
 
 class Enemy
 {
@@ -12,7 +13,7 @@ public:
 private:
     Vector2F _position{};
 
-    float _speed = 2.f;
+    float _speed = 300.f;
     Vector2F _direction = { 0.f, 0.f };
 
 	bool _isSwallowed = false;

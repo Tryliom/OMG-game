@@ -1,5 +1,8 @@
 #include "Enemy.h"
+
 #include "AudioManager.h"
+#include "Timer.h"
+#include "Window.h"
 
 #include <cmath>
 
@@ -17,8 +20,8 @@ void Enemy::Update()
 		_direction = Utility::GetDirection(_position, _swallowTarget);
 	}
 
-    _position.X += _direction.X * _speed;
-    _position.Y += _direction.Y * _speed;
+    _position.X += _direction.X * _speed * Timer::GetDeltaTime();
+    _position.Y += _direction.Y * _speed * Timer::GetDeltaTime();
 }
 
 void Enemy::Draw(Window& window)
@@ -27,7 +30,7 @@ void Enemy::Draw(Window& window)
 	{
 		auto distance = Utility::GetDistance(_position, _swallowTarget);
 		Sprite.SetScale(distance / _swallowDistance);
-		Sprite.SetRotation(Sprite.GetRotation() + 10.f);
+		Sprite.SetRotation(distance / _swallowDistance * 360.f);
 
 		if (Utility::GetDistance(_position, _swallowTarget) < 10.f)
 		{
@@ -50,7 +53,7 @@ void Enemy::Swallow(Vector2F target)
 {
 	_swallowTarget = target;
 	_isSwallowed = true;
-	_speed = 4.f;
+	_speed = 250.f;
 	_direction = Utility::GetDirection(_position, target);
 	_swallowDistance = Utility::GetDistance(_position, target);
 

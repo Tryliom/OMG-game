@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Input.h"
+#include "Timer.h"
 
 Player::Player() : _image("../assets/player.png")
 {
@@ -12,11 +13,11 @@ void Player::Update()
 {
     if (Input::IsKeyHeld(KB_KEY_A))
     {
-        _position.X -= _speed;
+        _position.X -= _speed * Timer::GetDeltaTime();
     }
     else if (Input::IsKeyHeld(KB_KEY_D))
     {
-        _position.X += _speed;
+        _position.X += _speed * Timer::GetDeltaTime();
     }
 }
 

@@ -122,8 +122,6 @@ void OnEnemySwallowed(Enemy enemy)
 	{
 		life++;
 	}
-
-	//TODO: Pop text with score at the enemy position
 }
 
 int main()
@@ -148,6 +146,14 @@ int main()
 			CheckBlackHole();
 
 			player.Update();
+
+			auto playerPosition = player.GetPosition();
+
+			if (playerPosition.X < 0.f) playerPosition.X = 0.f;
+			if (playerPosition.X > width) playerPosition.X = width;
+
+			player.SetPosition(playerPosition);
+
 			player.Draw(window);
 
 			enemyManager.Update(width, height);

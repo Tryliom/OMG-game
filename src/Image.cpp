@@ -1,15 +1,14 @@
-#include "../include/Image.h"
+#include "Image.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-
 #include "stb_image.h"
 #if defined(_WIN32)
     #include "malloc.h"
 #endif
-#include <cstdio>
-#include <cstring>
 
-#include <sys/stat.h>
+#include "Logger.h"
+
+#include <cstring>
 
 Image::Image()
 {
@@ -46,7 +45,7 @@ Image::Image(const char* filename)
 
 	if (pixels == nullptr)
 	{
-		printf("Failed to load image: %s\n", filename);
+		Logger::LogError("Failed to load image: " + std::string(filename));
 		return;
 	}
 

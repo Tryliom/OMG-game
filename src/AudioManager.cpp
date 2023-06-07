@@ -1,8 +1,8 @@
+#include "AudioManager.h"
+
 #include <cassert>
 #include <map>
 #include <iostream>
-
-#include "AudioManager.h"
 
 #define SOKOL_IMPL
 #include "sokol_log.h"

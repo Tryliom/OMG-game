@@ -2,11 +2,7 @@
 
 #include "Timer.h"
 
-#ifdef __EMSCRIPTEN__
-#define IMG_PATH "assets/grenade.png"
-#else
 #define IMG_PATH "../assets/grenade.png"
-#endif
 
 Image Grenade::Sprite(IMG_PATH);
 
@@ -17,8 +13,8 @@ Grenade::Grenade()
 
 void Grenade::Update()
 {
-    _position.X += _direction.X * _speed * Timer::GetDeltaTime();
-    _position.Y += _direction.Y * _speed * Timer::GetDeltaTime();
+    _position.X += _direction.X * _speed * Timer::GetSmoothDeltaTime();
+    _position.Y += _direction.Y * _speed * Timer::GetSmoothDeltaTime();
 }
 
 void Grenade::Draw(Window& window) const

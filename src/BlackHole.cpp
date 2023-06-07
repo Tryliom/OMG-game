@@ -1,10 +1,6 @@
 #include "BlackHole.h"
 
-#ifdef __EMSCRIPTEN__
-#define IMG_PATH "assets/black_hole.png"
-#else
 #define IMG_PATH "../assets/black_hole.png"
-#endif
 
 BlackHole::BlackHole() : _image(IMG_PATH)
 {

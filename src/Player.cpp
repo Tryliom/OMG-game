@@ -3,11 +3,7 @@
 #include "Input.h"
 #include "Timer.h"
 
-#ifdef __EMSCRIPTEN__
-#define IMG_PATH "assets/player.png"
-#else
 #define IMG_PATH "../assets/player.png"
-#endif
 
 Player::Player() : _image(IMG_PATH)
 {
@@ -19,11 +15,11 @@ void Player::Update()
 {
     if (Input::IsKeyHeld(KB_KEY_A))
     {
-        _position.X -= _speed * Timer::GetDeltaTime();
+        _position.X -= _speed * Timer::GetSmoothDeltaTime();
     }
     else if (Input::IsKeyHeld(KB_KEY_D))
     {
-        _position.X += _speed * Timer::GetDeltaTime();
+        _position.X += _speed * Timer::GetSmoothDeltaTime();
     }
 }
 

@@ -10,12 +10,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#ifdef __EMSCRIPTEN__
 #define ATLAS_FONT_IMAGE_PATH "../assets/font.png"
-#else
-#define ATLAS_FONT_IMAGE_PATH "../assets/font.png"
-#endif
-
 #define ATLAS_FONT_SIZE            32
 
 // Atlas sprite properties

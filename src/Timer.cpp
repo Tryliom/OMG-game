@@ -4,8 +4,7 @@
 
 float deltaTime = 0.f;
 int frames = 0;
-float totalTime = 0.f;
-bool stabilized = false;
+float timeStack[200];
 mfb_timer* timer;
 
 namespace Timer
@@ -18,28 +17,44 @@ namespace Timer
 
 	void Update()
 	{
+        if (frames == 200)
+        {
+            for (int i = 0; i < 200; i++)
+            {
+                if (i == 199)
+                {
+                    timeStack[i] = deltaTime;
+                }
+                else
+                {
+                    timeStack[i] = timeStack[i + 1];
+                }
+            }
+        }
+
+        if (frames < 200)
+        {
+            frames++;
+        }
+
 		deltaTime = mfb_timer_delta(timer);
-		frames++;
-		totalTime += deltaTime;
-
-		if (frames == 201 && !stabilized)
-		{
-            frames = 1;
-			totalTime = deltaTime;
-			stabilized = true;
-		}
-
-		if (totalTime > 99999.f)
-		{
-			totalTime -= 99999.f;
-            frames = 0;
-		}
+        timeStack[frames - 1] = deltaTime;
 	}
 
-	float GetDeltaTime()
+	float GetSmoothDeltaTime()
 	{
-		if (!stabilized) return deltaTime;
+		auto sum = 0.f;
 
-		return totalTime / frames;
+        for (auto i : timeStack)
+        {
+            sum += i;
+        }
+
+        return sum / frames;
 	}
+
+    float GetDeltaTime()
+    {
+        return deltaTime;
+    }
 }

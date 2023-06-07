@@ -6,11 +6,7 @@
 
 #include <cmath>
 
-#ifdef __EMSCRIPTEN__
-#define IMG_PATH "assets/enemy.png"
-#else
 #define IMG_PATH "../assets/enemy.png"
-#endif
 
 Image Enemy::Sprite(IMG_PATH);
 
@@ -26,8 +22,8 @@ void Enemy::Update()
 		_direction = Utility::GetDirection(_position, _swallowTarget);
 	}
 
-    _position.X += _direction.X * _speed * Timer::GetDeltaTime();
-    _position.Y += _direction.Y * _speed * Timer::GetDeltaTime();
+    _position.X += _direction.X * _speed * Timer::GetSmoothDeltaTime();
+    _position.Y += _direction.Y * _speed * Timer::GetSmoothDeltaTime();
 }
 
 void Enemy::Draw(Window& window)

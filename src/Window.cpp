@@ -3,10 +3,12 @@
 #include "MiniFB.h"
 #include "Input.h"
 #include "Timer.h"
+#include "Logger.h"
 
 #if defined(_WIN32)
     #include "malloc.h"
 #endif
+
 #include <cstring>
 #include <cmath>
 
@@ -33,6 +35,8 @@ Window::Window(uint32_t width, uint32_t height)
         _chars[sprite.charValue] = sprite;
         _charsImage[sprite.charValue] = font.Cut(sprite.positionX, sprite.positionY, sprite.sourceWidth, sprite.sourceHeight);
     }
+
+    Logger::Log("Window created");
 }
 
 void Window::Update()

@@ -5,5 +5,6 @@ namespace Timer
 	void Init();
 	void Update();
 
-	float GetDeltaTime();
+	float GetSmoothDeltaTime();
+    float GetDeltaTime();
 }

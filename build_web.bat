@@ -14,17 +14,17 @@ call C:\tools\emsdk\upstream\emscripten\em++ src\Window.cpp src\AudioManager.cpp
     -sEXPORT_NAME=my_game ^
     -sASYNCIFY ^
     --preload-file assets ^
-    -sSTRICT=1 ^
     -sENVIRONMENT=web ^
     -sMODULARIZE=1 ^
     -sALLOW_MEMORY_GROWTH=1 ^
+    -sTOTAL_STACK=10485760 ^
+    -sINITIAL_MEMORY=20971520 ^
     -sALLOW_TABLE_GROWTH ^
     -sMALLOC=emmalloc ^
     -sEXPORT_ALL=1 ^
     -sEXPORTED_FUNCTIONS=[\"_malloc\",\"_free\",\"_main\"] ^
     -sEXPORTED_RUNTIME_METHODS=ccall,cwrap ^
     -sASYNCIFY ^
-    --no-entry ^
-    -O3
+    --no-entry
 
 python3 -m http.server 8000

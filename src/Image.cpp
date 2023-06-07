@@ -9,6 +9,8 @@
 #include <cstdio>
 #include <cstring>
 
+#include <sys/stat.h>
+
 Image::Image()
 {
     _width = 0;

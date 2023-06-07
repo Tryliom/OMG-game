@@ -8,6 +8,8 @@
 #include "BlackHole.h"
 #include "AudioManager.h"
 
+#include <cmath>
+
 const uint32_t width = 640;
 const uint32_t height = 640;
 

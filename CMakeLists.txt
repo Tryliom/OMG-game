@@ -9,7 +9,7 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include all cpp and h files
-file(GLOB_RECURSE SRC src/*.cpp include/*.hpp)
+file(GLOB_RECURSE SRC src/*.cpp include/*.h)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SRC})
@@ -18,5 +18,15 @@ add_executable(${PROJECT_NAME} ${SRC})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/include/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
-target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/libs/win-x64/minifb.lib)
-target_link_libraries(${PROJECT_NAME} kernel32 user32 shell32 dxgi d3d11 ole32 gdi32 winmm opengl32)
+if(APPLE)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/libs/mac-x64/libminifb.a)
+    target_link_libraries(${PROJECT_NAME} "-framework Metal")
+    target_link_libraries(${PROJECT_NAME} "-framework MetalKit")
+    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} "-framework AudioToolbox")
+endif()
+
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/libs/win-x64/minifb.lib)
+    target_link_libraries(${PROJECT_NAME} kernel32 user32 shell32 dxgi d3d11 ole32 gdi32 winmm opengl32)
+endif()
